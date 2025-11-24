@@ -208,7 +208,7 @@ __marimo__/
 
 data/docs/
 # Ignore downloaded ZIP from Google Drive
-data/docs.zip
+data/raw_data.zip
 
 # Ignore generated dictionary
 data/raw_docs.json
