@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+data/docs/
+# Ignore downloaded ZIP from Google Drive
+data/docs.zip
+
+# Ignore generated dictionary
+data/raw_docs.json
