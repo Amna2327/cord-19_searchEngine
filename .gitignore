@@ -212,3 +212,6 @@ data/raw_data.zip
 
 # Ignore generated dictionary
 data/raw_docs.json
+
+# Ignore cleaned/preprocessed data
+/data/cleaned/
