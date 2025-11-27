@@ -1,0 +1,4 @@
+nltk
+gdown
+numpy
+pandas
