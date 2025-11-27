@@ -215,3 +215,7 @@ data/raw_docs.json
 
 # Ignore cleaned/preprocessed data
 /data/cleaned/
+/data/forward_index.json
+/data/lexicon.json
+/data/processed_docs_log.json
+/data/docs.zip
