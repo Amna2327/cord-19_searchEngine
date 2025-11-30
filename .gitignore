@@ -211,7 +211,7 @@ data/docs/
 data/raw_data.zip
 
 # Ignore generated dictionary
-data/raw_docs.json
+data/DocIndex.json
 
 # Ignore cleaned/preprocessed data
 /data/cleaned/
@@ -219,3 +219,5 @@ data/raw_docs.json
 /data/lexicon.json
 /data/processed_docs_log.json
 /data/docs.zip
+/data/inverted_log.json
+/data/inverted_index.json
