@@ -1,6 +1,7 @@
 import os
 import json
 from tqdm import tqdm
+from pathlib import Path
 
 # -------------------------------
 # Dynamically find repo root
@@ -21,7 +22,7 @@ def find_repo_root(start_path=None, marker=".git"):
 REPO_ROOT = find_repo_root()
 CLEANED_DOCS_FOLDER = os.path.join(REPO_ROOT, "data", "cleaned")
 LEXICON_PATH = os.path.join(REPO_ROOT, "data", "lexicon.json")
-LOG_PATH = os.path.join(REPO_ROOT, "data", "processed_docs_log.json")
+LOG_PATH = os.path.join(REPO_ROOT, "data", "lexicon_log.json")
 
 os.makedirs(CLEANED_DOCS_FOLDER, exist_ok=True)
 
@@ -46,16 +47,16 @@ else:
     processed_log = set()
 
 # -------------------------------
-# Scan cleaned docs
+# Scan cleaned docs using Path.glob for efficiency
 # -------------------------------
-all_files = [f for f in os.listdir(CLEANED_DOCS_FOLDER) if f.endswith(".json")]
+all_files = list(Path(CLEANED_DOCS_FOLDER).glob("*.json"))
 print(f"[INFO] Found {len(all_files)} cleaned JSON files.")
 
 count_added = 0
 count_skipped = 0
+incremental_log_update = 50  # save log every N files
 
-for filename in tqdm(all_files, desc="Building lexicon"):
-    file_path = os.path.join(CLEANED_DOCS_FOLDER, filename)
+for idx, file_path in enumerate(tqdm(all_files, desc="Building lexicon")):
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             doc = json.load(f)
@@ -64,8 +65,8 @@ for filename in tqdm(all_files, desc="Building lexicon"):
             continue
 
         # Combine all relevant fields for lexicon
-        fields = ["title", "abstract", "sections", "text"]
-        metadata_fields = ["authors", "journal"]
+        fields = ["abstract", "sections", "text"]
+        metadata_fields = ["title", "authors", "journal"]
         tokens = []
 
         for field in fields:
@@ -84,12 +85,17 @@ for filename in tqdm(all_files, desc="Building lexicon"):
         processed_log.add(paper_id)
         count_added += 1
 
+        # Incrementally save log every N files
+        if (idx + 1) % incremental_log_update == 0:
+            with open(LOG_PATH, "w", encoding="utf-8") as f:
+                json.dump(list(processed_log), f, indent=2)
+
     except Exception as e:
-        print(f"[WARNING] Skipping {filename}: {e}")
+        print(f"[WARNING] Skipping {file_path.name}: {e}")
         count_skipped += 1
 
 # -------------------------------
-# Save lexicon and log
+# Save final lexicon and log
 # -------------------------------
 with open(LEXICON_PATH, "w", encoding="utf-8") as f:
     json.dump(lexicon, f, indent=2)
@@ -99,3 +105,5 @@ with open(LOG_PATH, "w", encoding="utf-8") as f:
 
 print(f"[✔] Lexicon updated: {len(lexicon)} terms")
 print(f"[INFO] New docs processed: {count_added}, Skipped: {count_skipped}")
+
+
