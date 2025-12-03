@@ -1,5 +1,6 @@
 import os
 import json
+import ijson
 
 # -------------------------------
 # Dynamically find repo root by locating .git
@@ -50,32 +51,36 @@ count_added = 0
 count_skipped = 0
 
 for filename in os.listdir(docs_folder):
-    if filename.endswith(".json"):
+    if not filename.endswith(".json"):
+        continue
 
-        # Build TRUE dynamic relative path
-        full_path = os.path.join(docs_folder, filename)
-        relative_path = os.path.relpath(full_path, repo_root)
+    full_path = os.path.join(docs_folder, filename)
+    relative_path = os.path.relpath(full_path, repo_root)
 
-        try:
-            with open(full_path, "r", encoding="utf-8") as f:
-                content = f.read().strip()
-                if not content:
-                    print(f"[WARNING] Empty JSON skipped → {filename}")
-                    count_skipped += 1
-                    continue
-                doc = json.loads(content)
+    try:
+        paper_id = None
 
-            paper_id = doc.get("paper_id", None)
-            if paper_id:
-                raw_docs[paper_id] = relative_path
-                count_added += 1
-            else:
-                print(f"[WARNING] Skipping (no paper_id) → {filename}")
-                count_skipped += 1
+        # -------------------------------
+        # STREAM JSON instead of reading whole file
+        # -------------------------------
+        with open(full_path, "rb") as f:
+            # key-value iterator over top-level JSON
+            for key, value in ijson.kvitems(f, ''):
+                if key == "paper_id":
+                    paper_id = value
+                    break  # stop reading file immediately
 
-        except Exception as e:
-            print(f"[WARNING] Failed to load {filename}: {e}")
+        if not paper_id:
+            print(f"[WARNING] Skipping (no paper_id) → {filename}")
             count_skipped += 1
+            continue
+
+        raw_docs[paper_id] = relative_path
+        count_added += 1
+
+    except Exception as e:
+        print(f"[WARNING] Failed to load {filename}: {e}")
+        count_skipped += 1
 
 # -------------------------------
 # Save updated mapping
