@@ -217,7 +217,7 @@ data/DocIndex.json
 /data/cleaned/
 /data/forward_index.json
 /data/lexicon.json
-/data/processed_docs_log.json
+/data/lexicon_log.json
 /data/docs.zip
 /data/inverted_log.json
 /data/inverted_index.json
