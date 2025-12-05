@@ -215,7 +215,7 @@ data/DocIndex.json
 
 # Ignore cleaned/preprocessed data
 /data/cleaned/
-/data/forward_index.json
+/data/forward_index/
 /data/lexicon.json
 /data/lexicon_log.json
 /data/docs.zip
