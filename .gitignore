@@ -221,3 +221,5 @@ data/DocIndex.json
 /data/docs.zip
 /data/inverted_index_log.json
 /data/inverted_index.jsonl
+/data/forward_index_log.json
+data/barrels/
