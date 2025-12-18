@@ -71,8 +71,4 @@ def load_trie(trie_path, lexicon_path=None):
     with open(trie_path, "wb") as f:
         pickle.dump(trie, f)
 
-<<<<<<< HEAD
     return trie
-=======
-    return trie
->>>>>>> eda65d3b3a5408269ab54414d3eb2511177d59a6
