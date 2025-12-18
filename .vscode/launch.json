@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: FastAPI Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/api/server.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/api",
+            "python": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+            "justMyCode": true
+        }
+    ]
+}
+
