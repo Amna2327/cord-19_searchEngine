@@ -23,13 +23,20 @@ REPO_ROOT = find_repo_root()
 # -------------------------------
 # Paths
 # -------------------------------
-FORWARD_FOLDER = REPO_ROOT / "data" / "forward_index"
-TEMP_DIR = REPO_ROOT / "data" / "temp_pipeline" / "scratch_build" / "inverted_temp_chunks"
-FINAL_INVERTED = REPO_ROOT / "data" / "inverted_index.jsonl"
-FORWARD_LOG = REPO_ROOT / "data" / "forward_index_log.json"
-INVERTED_LOG = REPO_ROOT / "data" / "temp_pipeline" / "scratch_build" / "inverted_index_log.jsonl"
+REPO_ROOT = find_repo_root()
+FORWARD_INDEX_PATH = os.path.join(REPO_ROOT, "data", "forward_index.json")
+INVERTED_INDEX_PATH = os.path.join(REPO_ROOT, "data", "inverted_index.json")
+INVERTED_LOG_PATH = os.path.join(REPO_ROOT, "data", "inverted_log.json")
 
-TEMP_DIR.mkdir(parents=True, exist_ok=True)
+# -------------------------------
+# Load forward index
+# -------------------------------
+if not os.path.exists(FORWARD_INDEX_PATH):
+    print("[ERROR] forward_index.json not found. Build forward index first.")
+    exit(1)
+
+with open(FORWARD_INDEX_PATH, "r", encoding="utf-8") as f:
+    forward_index = json.load(f)
 
 # -------------------------------
 # Load logs

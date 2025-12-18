@@ -219,5 +219,7 @@ data/DocIndex.json
 /data/lexicon.json
 /data/lexicon_log.json
 /data/docs.zip
-/data/inverted_log.json
-/data/inverted_index.json
+/data/inverted_index_log.json
+/data/inverted_index.jsonl
+/data/forward_index_log.json
+data/barrels/
