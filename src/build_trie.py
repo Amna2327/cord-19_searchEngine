@@ -1,4 +1,3 @@
-# build_trie.py
 from pathlib import Path
 import os
 import json
