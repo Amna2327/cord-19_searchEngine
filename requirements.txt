@@ -4,3 +4,9 @@ numpy
 pandas
 ijson
 orjson
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+faiss-cpu
+requests
