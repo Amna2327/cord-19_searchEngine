@@ -454,7 +454,7 @@ No formal latency or memory benchmarks have been collected yet — see [Future W
 
 - [Amna Ahmed](https://github.com/)
 - [Ridanawaz2701](https://github.com/Ridanawaz2701)
-- [nshanbse24seecs-dot](https://github.com/nshanbse24seecs-dot)
+- [nshanbse24seecs-dot](https://github.com/nshahbese24seecs-dot)
 
 ---
 
